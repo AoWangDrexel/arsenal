@@ -1,2 +1,2 @@
 # crypto
-Python Cryptography Package in the works
+Common frequently used ciphers implemented with Python.
