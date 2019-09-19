@@ -89,15 +89,15 @@ def get_english_count(msg):
     """
     msg = msg.lower()
     msg = remove_non_letters(msg)
-    possibleWords = msg.split()
-    if possibleWords == []:
+    possible_words = msg.split()
+    if possible_words == []:
         return 0
     matches = 0
 
-    for word in possibleWords:
+    for word in possible_words:
         if word in ENGLISH_WORDS:
             matches += 1
-    return 100 * float(matches) / len(possibleWords)
+    return 100 * float(matches) / len(possible_words)
 
 
 def find_max_ind(keys):
