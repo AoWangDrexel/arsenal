@@ -5,4 +5,5 @@ Modules:
     caesar_cipher.py
     detect_english.py
     transposition_cipher.py
+    affine_cipher.py
 """
