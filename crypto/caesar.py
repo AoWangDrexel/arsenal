@@ -2,10 +2,10 @@
 This module implements the Caesar Cipher and multiple techniques to break the cipher, such as brute force with English detection and cryptanalysis.
 
 Example:
-    $ python caesar_cipher.py
+    $ python caesar.py
 
-    import caesar_cipher as cc
-    print(cc.encrypt("Hello World", 2))
+    import caesar
+    print(caesar.encrypt("Hello World", 2))
     > Jgnnq Yqtnf
 
 Attributes:
