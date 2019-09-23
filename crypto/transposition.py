@@ -2,10 +2,10 @@
 This module implements two verions of the Columnar Transposition Cipher.
 
 Example:
-    $ python transposition_cipher.py
+    $ python transposition.py
 
-    import transposition_cipher as tc
-    print(tc.ColumnarSimple.encrypt("Hello World", 3))
+    import transposition as tp
+    print(tp.ColumnarSimple.encrypt("Hello World", 3))
     > HlWleoodl r
 
     print(tc.ColumnarComplex.encrypt("Hello World", "zebras"))
