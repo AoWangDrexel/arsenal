@@ -2,10 +2,10 @@
 This module implements the International Morse Code on text
 
 Example:
-    $ python morse_code.py
+    $ python morse.py
 
-    import morse_code as mc
-    print(mc.encode("Hello World"))
+    import morse
+    print(morse.encode("Hello World"))
     > .... . .-.. .-.. --- | .-- --- .-. .-.. -..
 
 Attributes:
