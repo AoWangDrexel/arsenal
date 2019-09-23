@@ -1,9 +1,9 @@
 """
 Modules:
     number_system.py
-    morse_code.py
-    caesar_cipher.py
+    morse.py
+    caesar.py
     detect_english.py
-    transposition_cipher.py
-    affine_cipher.py
+    transposition.py
+    affine.py
 """
