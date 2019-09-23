@@ -2,10 +2,10 @@
 This module implements the Affine Cipher.
 
 Example:
-    $ python affine_cipher.py
+    $ python affine.py
 
-    import affine_cipher as ac
-    print(ac.encrypt("Hello World", 5, 8))
+    import affine
+    print(affine.encrypt("Hello World", 5, 8))
     > Rclla Oaplx
 
 Attributes:
