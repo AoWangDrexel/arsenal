@@ -1,98 +1,57 @@
+from cryptsenal import detect_english as de
+
+"""The Caesar Cipher Module.
+
+The Caesar Implementation includes encryption and decryption. 
+There is also a brute force algorithm, along with a letter freqency
+cipher break.
 """
-This module implements the Caesar Cipher and multiple techniques to break the cipher, such as brute force with English detection and cryptanalysis.
-
-Example:
-    $ python caesar.py
-
-    import caesar
-    print(caesar.encrypt("Hello World", 2))
-    > Jgnnq Yqtnf
-
-Attributes:
-    ALPHABET: str
-        the lower and uppercase of the alphabet
-
-Methods:
-    load_alphabet()
-        Returns a string of the lower and uppercase of the alphabet
-    encrypt(plain_text, key)
-        Returns the encrypted plain text
-    symbol_count(text)
-        Returns a dictionary of the symbol frequency
-    decrypt(cipher_text, key)
-        Returns the decrypted cipher text
-    cryptanalysis(cipher_text)
-        Returns the decrypted cipher text without the need of the key by finding the most
-        frequent symbol
-    brute_force(cipher_text)
-        Returns the decrypted cipher text without the need of the key by testing keys: 0-25
-"""
-from crypto import detect_english as de
-
-ALPHABET = ""
-
-
-def load_alphabet():
-    """The function loops through the ASCII code and returns a string of the
-       lower and uppercase alphabet.
-    """
-    alphabet = ""
-    for i in range(26):
-        alphabet += chr(ord("A") + i)
-        alphabet += chr(ord("a") + i)
-    return alphabet
-
-
-ALPHABET = load_alphabet()
 
 
 def encrypt(plain_text, key):
-    """The function encrypts the text with a certain key.
+    """Encrypts the plain text with key.
+    
+    Example
+    =======
+    >>> from cryptsenal.caesar import *
+    >>> encrypt("Hello World", 2)
+    Jgnnq Yqtnf
 
-        Args:
-            plain_text (str): The uncrypted message
-            key (int): The integer shift of the alphabet
+    Args:
+        plain_text (str): A plain text.
+        key (int): A key shift.
 
-        Returns:
-            str: The encrypted plain_text
-
-        Raises:
-            TypeError
-                If plain_text or key is not passed through as an argument or
-                if the plain_text is not a string type or key is not a integer type.
-
+    Returns:
+        str: A cipher text. 
     """
-    cipher_text = ""
-    for letter in plain_text:
-        if letter.isupper() and letter in ALPHABET:
-            cipher_text += chr((ord(letter) + key - ord("A")) % 26 + ord("A"))
-        elif letter.islower() and letter in ALPHABET:
-            cipher_text += chr((ord(letter) + key - ord("a")) % 26 + ord("a"))
+    letter, cipher_text = "", ""
+    for symbol in plain_text:
+        if symbol.isalpha():
+            letter = chr((ord(symbol.upper()) + key - ord("A")) % 26 + ord("A"))
+            cipher_text += letter if symbol.isupper() else letter.lower()
         else:
-            cipher_text += letter
+            cipher_text += symbol
     return cipher_text
 
 
-def symbol_count(text):
-    """The function returns a dictionary that counts the frequency of the alphabet and symbols.
+def letter_count(text):
+    """Counts the number of each alphabet in the text.
+    
+    Example
+    =======
+    >>> from cryptsenal.caesar import *
+    >>> letter_count("How was your day?")
+    {'H': 1, 'O': 2, 'W': 2, 'A': 2, 'S': 1, 'Y': 2, 'U': 1, 'R': 1, 'D': 1}
+    Args:
+        text (str): A string of text.
 
-       Args:
-           text (str): The string of text
-
-       Returns:
-           dict: The dictionary counting the frequency of the alphabet in the text
-
-       Raises:
-           AttributeError
-               If text is not passed as a string type.
-           TypeError
-               If text is not passed as an argument.
-
+    Returns:
+        dict: A frequency of the alphabet in the text.
     """
     letter_dict = {}
     text = text.upper()
     for letter in text:
-        if letter in ALPHABET:
+        if letter.isalpha():
             if letter not in letter_dict.keys():
                 letter_dict[letter] = 1
             else:
@@ -101,101 +60,90 @@ def symbol_count(text):
 
 
 def decrypt(cipher_text, key):
-    """The function decrypts the cipher text given the key and returns the decrypted message.
+    """Decrypts a cipher text.
+    
+    Example
+    =======
+    >>> from cryptsenal.caesar import *
+    >>> decrypt("Jgnnq Yqtnf", 2)
+    Hello World
+    
+    Args:
+        cipher_text (str): A cipher text.
+        key (int): A key.
 
-       Args:
-           cipher_text (str): The encrypted text
-           key (int): The key used to shift the text
-
-       Returns:
-           str: The decrypted text
-
-       Raises:
-           TypeError
-               If cipher_text or key is not passed through as an argument or
-               if the cipher_text is not a string type or key is not a integer type.
+    Returns:
+        str: A plain text.
     """
-
-    while(key < 0):
+    while key < 0:
         key += 26
-
     if key > 0:
         key = 26 - key
-
     return encrypt(cipher_text, key)
 
 
 def cryptanalysis(cipher_text):
-    """The function decrypts the cipher by finding the most frequent letter. However this
-       method does not always work depending on the length of the cipher text. If the text is long
-       there is a greater chance of decryption.
+    """Decrypts the cipher by finding the most frequent letter.
+    
+    Example
+    =======
+    >>> from cryptsenal.caesar import *
+    >>> msg = \"""
+    Qctpyod, Czxlyd, nzfyecjxpy, wpyo xp jzfc plcd;T nzxp ez mfcj Nlpdlc,
+    yze ez acltdp stx.Esp pgtw esle xpy oz wtgpd lqepc espx;Esp rzzo td 
+    zqe tyepccpo htes esptc mzypd;Dz wpe te mp htes Nlpdlc.
+    \"""
+    >>> cryptanalysis(msg)
+    Friends, Romans, countrymen, lend me your ears;I come to bury Caesar,
+    not to praise him.The evil that men do lives after them;The good is
+    oft interred with their bones;So let it be with Caesar.
+    
+    Args:
+        cipher_text (str): A cipher text.
 
-       Args:
-           cipher_text (str): encrypted text
-
-       Returns:
-           str: decrypted text
-
-       Raises:
-           TypeError
-               If cipher_text is not passed as an argument or not a string type.
+    Returns:
+        str: A plain text.
     """
-    alphabet = []
-    high = 0
-    high_key = ""
-
-    for letter in range(26):
-        alphabet.append(chr(ord("A") + letter))
-
-    letter_dict = symbol_count(cipher_text)
-
-    for keys in letter_dict.keys():
-        if letter_dict.get(keys) > high:
-            high = letter_dict.get(keys)
-            high_key = keys
-
-    break_key = alphabet.index(high_key) - alphabet.index("E")
-
+    alphabet = [chr(ord("A") + i) for i in range(26)]
+    letter_dict = letter_count(cipher_text)
+    key_list, val_list = list(letter_dict.keys()), list(letter_dict.values())
+    key_break = key_list[val_list.index(max(letter_dict.values()))]
+    break_key = alphabet.index(key_break) - alphabet.index("E")
     if break_key <= 0:
         break_key += 26
     return encrypt(cipher_text, 26 - break_key)
 
 
 def brute_force(cipher_text):
-    """The function prints out all the possibilities of the cipher by testing keys from 0-25.
+    """Prints the plain text by trying all 25 keys.
+    
+    Example
+    =======
+    >>> from cryptsenal.caesar import *
+    >>> brute_force("Jgnnq Yqtnf")
+    Cipher hacked! :)
+    Key: 2
+    Decrypted text: Hello World
+    English Percentage: 100.0
+    
+    Args:
+        cipher_text (str): Encrypted text
 
-       Args:
-           cipher_text (str): Encrypted text
-
-       Returns:
-           str: Decrypted cipher message
-
-       Raises:
-           TypeError
-               If cipher_text is not passed as an argument or cipher_text is not a string
+    Returns:
+        str: Decrypted cipher message
     """
-    print("Hacking...")
-
     percentages = {}
     for key in range(1, 26):
         decrypted_text = encrypt(cipher_text, key)
-
         threshold = 80
         if de.get_english_count(decrypted_text) > threshold:
             percentages[key] = de.get_english_count(decrypted_text)
-
-    key_break = de.find_max_ind(percentages)
-
+    key_list, val_list = list(percentages.keys()), list(percentages.values())
+    key_break = key_list[val_list.index(max(percentages.values()))]
     if key_break != -1:
-        print("Cipher hacked! :)\n")
-        print("The key is: " + str(26 - key_break))
-        print(
-            "Decrypted text: " +
-            encrypt(
-                cipher_text,
-                key_break) +
-            "\n")
-        print("Percentage of words in dictionary: " +
-              str(percentages[key_break]))
+        print("Cipher hacked! :)")
+        print("Key: " + str(26 - key_break))
+        print("Decrypted text: " + encrypt(cipher_text, key_break))
+        print("English Percentage: " + str(percentages[key_break]))
     else:
         print("Failed to hack cipher :(")
