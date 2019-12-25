@@ -1,9 +1,12 @@
 """
 Modules:
-    number_system.py
-    morse.py
-    caesar.py
-    detect_english.py
-    transposition.py
-    affine.py
+    ['affine.py',
+    'caesar.py',
+    'detect_english.py',
+    'morse.py',
+    'number_system.py',
+    'one_time_pad.py',
+    'simple_sub.py',
+    'tranposition.py',
+    'vigenere.py']
 """
