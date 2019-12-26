@@ -1,2 +1,2 @@
 # cryptsenal
-Common frequently used ciphers implemented with Python.
+Python Cryptography Package
