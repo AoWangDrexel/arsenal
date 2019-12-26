@@ -1,178 +1,126 @@
-"""
-This module implements the Affine Cipher.
+import cryptsenal.detect_english as de
 
-Example:
-    $ python affine.py
 
-    import affine
-    print(affine.encrypt("Hello World", 5, 8))
-    > Rclla Oaplx
+"""The Affine Cipher Module.
 
-Attributes:
-    ALPHABET (str): the Latin alphabet
-
-Methods:
-    load_alphabet()
-        Returns Latin alphabet
-    gcd(num1, num2)
-        Returns the greatest common divisor
-    mod_inverse(num1, num2)
-        Returns the modular inverse
-    equation(num, slope, intercept)
-        Returns integer after being multiplied by slope and added by intercept
-    encrypt(plain_text, key_a, key_b)
-        Returns encrypted plain text
-    decrypt(cipher_text, key_a, key_b)
-        Returns decrypted cipher text
-    brute_force(cipher_text)
-        Returns decrypted cipher text by testing all possibilites
+The Affine Cipher Implementation has encrypytion and decryption methods,
+along with a brute force module.
 """
 
 
-from crypto import detect_english as de
+def gcd(a, b):
+    """Returns the greatest common divisor.
+    
+    Example
+    =======
+    >>> from cryptsenal.affine import *
+    >>> gcd(15, 6)
+    3
+    
+    Args:
+        a (int): The first number.
+        b (int): The second number.
 
-ALPHABET = ""
-
-
-def load_alphabet():
-    """The function loads the English alphabet
+    Returns:
+        int: The greatest common divisor of the two numbers.
     """
-    alphabet = ""
-    for i in range(26):
-        alphabet += chr(ord("a") + i)
-    return alphabet
+    if b == 0:
+        return a
+    return gcd(b, a % b)
 
 
-ALPHABET = load_alphabet()
+def mod_inverse(a, b):
+    """Returns the modular inverse using Euclid's extended algorithm.
+    
+    Example
+    =======
+    >>> from cryptsenal.affine import *
+    >>> mod_inverse(5, 26)
+    21
+    
+    Args:
+        a (int): The first number.
+        b (int): The second number.
 
+    Returns:
+        int: The modular inverse.
 
-def gcd(num1, num2):
-    """The function returns the greatest common divisor using Euclid's algorithm.
-
-        Args:
-            num1 (int): the first number
-            num2 (int): the second number
-
-        Returns:
-            int: the greatest common divisor of the two numbers
-
-        Raises:
-            TypeError
-                If neither arguments are passed or neither arguments are integers.
+    Note
+    ====
+    Pseudocode can be found here: https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
     """
-    while num1 != 0:
-        num1, num2 = num2 % num1, num1
-    return num2
-
-
-def mod_inverse(num1, num2):
-    """The function returns the modular inverse using Euclid's extended algorithm.
-
-       Args:
-           num1 (int): the first number
-           num2 (int): the second number
-
-       Returns:
-           int: the modular inverse of the two numbers
-
-       Raises:
-           TypeError
-               If neither arguments are passed or neither arguments are integers.
-    """
-    if gcd(num1, num2) != 1:
-        return -1
-
-    u1, u2, u3 = 1, 0, num1
-    v1, v2, v3 = 0, 1, num2
-
-    while v3 != 0:
-        q = u3 // v3
-        v1, v2, v3, u1, u2, u3 = (
-            u1 - q * v1), (u2 - q * v2), (u3 - q * v3), v1, v2, v3
-
-    return u1 % num2
-
-
-def equation(num, slope, intercept):
-    """The function returns the integer used for the cipher using key1 and key2.
-
-        Args:
-            num (int): the number
-            slope (int): the slope
-            intercept (int): the intercept
-
-        Returns:
-            int: the result of the number multiplied by the slope and added by the intercept
-
-        Raises:
-            TypeError
-                If all arguments are not passed or all arguments are not integers.
-    """
-    return slope * num + intercept
+    t, newt, r, newr = 0, 1, b, a
+    while newr != 0:
+        q = r // newr
+        t, newt = newt, t - q * newt
+        r, newr = newr, r - q * newr
+    if r > 1:
+        return "{} is not invertible".format(a)
+    if t < 0:
+        t += b
+    return t
 
 
 def encrypt(plain_text, key_a, key_b):
-    """The function encrypts the plain text and returns the cipher text.
+    """Encrypts the plain text.
 
-        Args:
-            plain_text (str): the plain text
-            key_a (int): the slope key
-            key_b (int): the intercept key
+    Example
+    =======
+    >>> from cryptsenal.affine import *
+    >>> encrypt("How are you today? Will you be my friend?", 5, 18)
+    Bky szm iko jkhsi? Ygvv iko xm ai rzgmfh?
+    
+    Args:
+        plain_text (str): A plain text.
+        key_a (int): A slope key.
+        key_b (int): An intercept key.
 
-        Returns:
-            str: the encrypted plain text
-
-        Raises:
-            TypeError:
-                If all arguments are not passed or plain_text is not a string type or key_a or key_b are neither int types.
+    Returns:
+        str: A cipher text. 
     """
     cipher_text = ""
     for symbol in plain_text:
-        if symbol.lower() in ALPHABET:
-            idx = equation(
-                ALPHABET.index(
-                    symbol.lower()),
-                key_a,
-                key_b) % len(ALPHABET)
-            if symbol.isupper():
-                cipher_text += ALPHABET[idx].upper()
-            else:
-                cipher_text += ALPHABET[idx]
+        if symbol.isalpha():
+            cipher_text += (
+                chr(((((ord(symbol) - 65) * key_a) + key_b) % 26) + 65)
+                if symbol.isupper()
+                else chr(
+                    ((((ord(symbol.upper()) - 65) * key_a) + key_b) % 26) + 65
+                ).lower()
+            )
         else:
             cipher_text += symbol
     return cipher_text
 
 
 def decrypt(cipher_text, key_a, key_b):
-    """The function returns the decrypted cipher text.
+    """Decrypts the cipher text.
+    
+    Example
+    =======
+    >>> from cryptsenal.affine import *
+    >>> decrypt("Bky szm iko jkhsi? Ygvv iko xm ai rzgmfh?", 5, 18)
+    How are you today? Will you be my friend?
+    
+    Args:
+        cipher_text (str): A cipher text.
+        key_a (int): A slope key
+        key_b (int): An intercept key.
 
-        Args:
-            cipher_text (str): the cipher text
-            key_a (int): the slope key
-            key_b (int): the intercept key
-
-        Returns:
-            str: the decrypted cipher text
-
-        Raises:
-            TypeError:
-                If all arguments are not passed or cipher_text is not a string type or key_a or key_b are neither int types.
+    Returns:
+        str: A plain text.
     """
     plain_text = ""
     for symbol in cipher_text:
-        if symbol.lower() in ALPHABET:
-            idx = abs(
-                (ALPHABET.index(
-                    symbol.lower()) -
-                    key_b) *
-                mod_inverse(
-                    key_a,
-                    len(ALPHABET)) %
-                len(ALPHABET))
-            if symbol.isupper():
-                plain_text += ALPHABET[idx].upper()
-            else:
-                plain_text += ALPHABET[idx]
+        if symbol.isalpha():
+            plain_text += (
+                chr((ord(symbol) - 65 - key_b) * mod_inverse(key_a, 26) % 26 + 65)
+                if symbol.isupper()
+                else chr(
+                    (ord(symbol.upper()) - 65 - key_b) * mod_inverse(key_a, 26) % 26
+                    + 65
+                ).lower()
+            )
         else:
             plain_text += symbol
     return plain_text
@@ -180,34 +128,34 @@ def decrypt(cipher_text, key_a, key_b):
 
 def brute_force(cipher_text):
     """The function returns the decrypted cipher text by testing all the possibilties for the two keys.
+    
+    Example
+    =======
+    >>> from cryptsenal.affine import *
+    >>> brute_force("Bky szm iko jkhsi? Ygvv iko xm ai rzgmfh?")
+    Key 1: 5
+    Key 2: 18
+    Percentage accuracy: 100.0
+    How are you today? Will you be my friend?
+    
+    Args:
+        cipher_text (str): the cipher text
 
-       Args:
-           cipher_text (str): the cipher text
-
-       Returns:
-           str: the decrypted cipher text
-
-       Raises:
-           TypeError
-               If cipher_text is not passed in as an argument or cipher text is not a string type.
+    Returns:
+        str: the decrypted cipher text
     """
-    print("Hacking...")
-
-    percentages = {}
-    key1 = 1
-    while key1 != 26:
-        while gcd(key1, 26) != 1:
-            key1 += 1
-
+    key1, percentages = 1, {}
+    for key1 in range(26):
+        if gcd(key1, 26) != 1:
+            continue
         for key2 in range(26):
             if de.get_english_count(decrypt(cipher_text, key1, key2)) > 80:
-                percentages[str(key1) + " " + str(key2)
-                            ] = de.get_english_count(decrypt(cipher_text, key1, key2))
-        key1 += 1
-
-    key_break = list(map(int, de.find_max_ind(percentages).split()))
+                percentages[str(key1), str(key2)] = de.get_english_count(
+                    decrypt(cipher_text, key1, key2)
+                )
+    key_list, val_list = list(percentages.keys()), list(percentages.values())
+    key_break = key_list[val_list.index(max(percentages.values()))]
     print("Key 1: " + str(key_break[0]))
     print("Key 2: " + str(key_break[1]))
-    print("Percentage accuracy: " +
-          str(percentages[de.find_max_ind(percentages)]))
-    return decrypt(cipher_text, key_break[0], key_break[1])
+    print("Percentage accuracy: " + str(percentages[key_break]))
+    return decrypt(cipher_text, int(key_break[0]), int(key_break[1]))
