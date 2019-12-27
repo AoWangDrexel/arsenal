@@ -30,7 +30,7 @@ def order(word):
     word_list = "".join(sorted([letter for letter in word]))
     for letter in word:
         if letter in letter_count.keys():
-            letter_count[letter]+=1
+            letter_count[letter] += 1
         else:
             letter_count[letter] = word_list.find(letter)
         order_list.append(letter_count[letter])
@@ -54,14 +54,14 @@ def encrypt(plain_text, key):
         str: A cipher text.
     """
     cipher_text, col = "", len(key)
-    row = ceil(len(plain_text)/col)
+    row = ceil(len(plain_text) / col)
     ordering = order(key)
     arr = np.full((row, col), " ")
-    while col*row > len(plain_text):
-        plain_text += chr(65+randint(0,25))
+    while col * row > len(plain_text):
+        plain_text += chr(65 + randint(0, 25))
     for r in range(row):
         for c in range(col):
-            arr[r,c] = plain_text[r*col+c]
+            arr[r, c] = plain_text[r * col + c]
     for c in range(col):
         for r in range(row):
             pos = ordering.index(c)
@@ -86,14 +86,14 @@ def decrypt(cipher_text, key):
         str: A plain text.
     """
     plain_text, col = "", len(key)
-    row = ceil(len(cipher_text)/col)
+    row = ceil(len(cipher_text) / col)
     ordering = order(key)
     arr = np.full((row, col), " ")
     for c in range(col):
         for r in range(row):
             pos = ordering.index(c)
-            arr[r, pos] = cipher_text[c*col+r]
+            arr[r, pos] = cipher_text[c * col + r]
     for i in range(row):
         for j in range(col):
-            plain_text += arr[i,j]
+            plain_text += arr[i, j]
     return plain_text
