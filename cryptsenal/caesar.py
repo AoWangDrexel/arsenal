@@ -14,13 +14,22 @@ class Caesar(Cipher):
         self.key = key
 
     def encrypt(self):
-        pass
+        self.text = list(self.removePunctuation())
+        self.text = [(self.charToInt(char) + self.key) for char in self.text]
+        return "".join([self.intToChar(num) for num in self.text])
 
     def decrypt(self):
-        pass
+        self.text = list(self.removePunctuation())
+        self.text = [(self.charToInt(char) - self.key) for char in self.text]
+        return "".join([self.intToChar(num) for num in self.text])
 
     def getKey(self):
         return key
 
     def setKey(self, key):
         self.key = key
+
+
+if __name__ == "__main__":
+    c = Caesar("EFGFOEUIFFBTUXBMMPGUIFDBTUMF", 27)
+    print(c.decrypt())
