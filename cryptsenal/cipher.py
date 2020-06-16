@@ -36,11 +36,25 @@ class Cipher(metaclass=abc.ABCMeta):
         return self.text.translate(str.maketrans('', '', string.punctuation + " "))
 
     def intToChar(self, num):
+        """Converts integers into characters in the alphabet
+
+        :param num: the number you're trying to convert
+        :type num: int
+        :returns: the letter at the number
+        :rtype: str
+        """
         num %= 26
         arr = [chr(ord('A')+i) for i in range(26)]
         return arr[num]
 
     def charToInt(self, char):
+        """Converts the character to an integer according to a dictionary
+
+        :param char: the character you're trying to convert
+        :type char: str
+        :returns: the value at the character
+        :rtype: int
+        """
         char = char.upper()
         arr = {chr(ord('A')+i): i for i in range(26)}
         return arr[char]
