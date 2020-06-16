@@ -3,10 +3,19 @@ description: vigenere cipher
 author: ao wang
 date: june 16, 2020
 """
+
 from cipher import Cipher
 
 
 class Vigenere(Cipher):
+    """The Vigenere Cipher class
+
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: str
+    """
+
     def __init__(self, text, key):
         super().__init__(text)
         self.key = key
