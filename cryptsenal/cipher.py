@@ -33,7 +33,17 @@ class Cipher(metaclass=abc.ABCMeta):
         :returns: the plain text with only alphanumeric characters
         :rtype: str
         """
-        return self.text.translate(str.maketrans('', '', string.punctuation))
+        return self.text.translate(str.maketrans('', '', string.punctuation + " "))
+
+    def intToChar(self, num):
+        num %= 26
+        arr = [chr(ord('A')+i) for i in range(26)]
+        return arr[num]
+
+    def charToInt(self, char):
+        char = char.upper()
+        arr = {chr(ord('A')+i): i for i in range(26)}
+        return arr[char]
 
     def getText(self):
         return self.text
