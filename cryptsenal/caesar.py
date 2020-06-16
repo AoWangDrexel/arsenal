@@ -10,6 +10,14 @@ import time
 
 
 class Caesar(Cipher):
+    """The Caesar Cipher class
+
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: int
+    """
+
     def __init__(self, text, key):
         super().__init__(text)
         self.key = key
