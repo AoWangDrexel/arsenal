@@ -6,6 +6,7 @@ date: june 16, 2020
 
 
 from cipher import Cipher
+import time
 
 
 class Caesar(Cipher):
@@ -13,15 +14,20 @@ class Caesar(Cipher):
         super().__init__(text)
         self.key = key
 
+    def __str__(self):
+        return "Text: {}, Key: {}".format(self.text, self.key)
+
     def encrypt(self):
-        self.text = list(self.removePunctuation())
-        self.text = [(self.charToInt(char) + self.key) for char in self.text]
-        return "".join([self.intToChar(num) for num in self.text])
+        self.text = self.removePunctuation()
+        self.text = [self.intToChar((self.charToInt(char) + self.key))
+                     if char.isalpha() else char for char in self.text]
+        return "".join(self.text)
 
     def decrypt(self):
-        self.text = list(self.removePunctuation())
-        self.text = [(self.charToInt(char) - self.key) for char in self.text]
-        return "".join([self.intToChar(num) for num in self.text])
+        self.text = self.removePunctuation()
+        self.text = [self.intToChar((self.charToInt(char) - self.key))
+                     if char.isalpha() else char for char in self.text]
+        return "".join(self.text)
 
     def getKey(self):
         return key
@@ -31,5 +37,5 @@ class Caesar(Cipher):
 
 
 if __name__ == "__main__":
-    c = Caesar("EFGFOEUIFFBTUXBMMPGUIFDBTUMF", 27)
-    print(c.decrypt())
+    caesar = Caesar("defend the east wall of the castle", 12)
+    print(caesar.encrypt())
