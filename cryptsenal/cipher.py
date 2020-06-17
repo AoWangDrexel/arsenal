@@ -21,20 +21,12 @@ class Cipher(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def encrypt(self):
-        """Encrypts the plain text into cipher text
-
-        :returns: the encrypted plain text
-        :rtype: str
-        """
+        """Encrypts the plain text into cipher text"""
         pass
 
     @abc.abstractmethod
     def decrypt(self):
-        """Decrypts the cipher text into plain text
-
-        :returns: the decrypted cipher text
-        :rtype: str
-        """
+        """Decrypts the cipher text into plain text"""
         pass
 
     def removePunctuation(self):

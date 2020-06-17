@@ -26,12 +26,22 @@ class Caesar(Cipher):
         return "Text: {}, Key: {}".format(self.text, self.key)
 
     def encrypt(self):
+        """Encrypts the plain text into cipher text
+
+        :returns: the encrypted plain text
+        :rtype: str
+        """
         self.text = self.removePunctuation()
         self.text = [self.intToChar((self.charToInt(char) + self.key))
                      if char.isalpha() else char for char in self.text]
         return "".join(self.text)
 
     def decrypt(self):
+        """Decrypts the cipher text into plain text
+
+        :returns: the decrypted cipher text
+        :rtype: str
+        """
         self.text = self.removePunctuation()
         self.text = [self.intToChar((self.charToInt(char) - self.key))
                      if char.isalpha() else char for char in self.text]
@@ -47,12 +57,3 @@ class Caesar(Cipher):
 if __name__ == "__main__":
     caesar = Caesar("defend the east wall of the castle", 12)
     print(caesar.encrypt())
-    s = """Friends, Romans, countrymen, lend me your ears;
-I come to bury Caesar, not to praise him.
-The evil that men do lives after them;
-The good is oft interred with their bones;
-So let it be with Caesar. The noble Brutus
-Hath told you Caesar was ambitious:
-If it were so, it was a grievous fault,
-And grievously hath Caesar answer’d it."""
-    print(Caesar(s, 3).removePunctuation())

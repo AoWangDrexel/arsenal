@@ -24,12 +24,22 @@ class Vigenere(Cipher):
         return "Text: {}, Key: {}".format(self.text, self.key)
 
     def encrypt(self):
+        """Encrypts the plain text into cipher text
+
+        :returns: the encrypted plain text
+        :rtype: str
+        """
         self.text = self.removePunctuation()
         self.text = [self.intToChar((self.charToInt(char) + self.charToInt(self.key[idx % len(self.key)])))
                      if char.isalpha() else char for (idx, char) in enumerate(self.text)]
         return "".join(self.text)
 
     def decrypt(self):
+        """Decrypts the cipher text into plain text
+
+        :returns: the decrypted cipher text
+        :rtype: str
+        """
         self.text = self.removePunctuation()
         self.text = [self.intToChar((self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)])))
                      if char.isalpha() else char for (idx, char) in enumerate(self.text)]
