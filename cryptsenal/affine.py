@@ -15,11 +15,10 @@ class Affine(Cipher):
     """
 
     def __init__(self, text, key):
-        super().__init__(text)
         if gcd(key[0], 26) != 1:
             raise Exception(
                 "a={} must be relatively prime to m=26".format(key[0]))
-        self.key = key
+        super().__init__(text, key)
 
     def __str__(self):
         a, b = self.key

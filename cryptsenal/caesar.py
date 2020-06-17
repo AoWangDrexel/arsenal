@@ -18,8 +18,7 @@ class Caesar(Cipher):
     """
 
     def __init__(self, text, key):
-        super().__init__(text)
-        self.key = key
+        super().__init__(text, key)
 
     def __str__(self):
         return "Text: {}, Key: {}".format(self.text, self.key)

@@ -16,8 +16,9 @@ class Cipher(metaclass=abc.ABCMeta):
     :type text: str
     """
 
-    def __init__(self, text):
+    def __init__(self, text, key):
         self.text = text
+        self.key = key
 
     @abc.abstractmethod
     def encrypt(self):
@@ -66,3 +67,9 @@ class Cipher(metaclass=abc.ABCMeta):
 
     def setText(self, text):
         self.text = text
+
+    def getKey(self):
+        return self.key
+
+    def setKey(self, key):
+        self.key = key

@@ -17,8 +17,7 @@ class Vigenere(Cipher):
     """
 
     def __init__(self, text, key):
-        super().__init__(text)
-        self.key = key.upper()
+        super().__init__(text, key.upper())
 
     def __str__(self):
         return "Text: {}, Key: {}".format(self.text, self.key)
@@ -44,12 +43,6 @@ class Vigenere(Cipher):
         arr = [self.intToChar(self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)]))
                if char.isalpha() else char for (idx, char) in enumerate(arr)]
         return "".join(arr)
-
-    def getKey(self):
-        return self.key
-
-    def setKey(self, key):
-        self.key = key
 
 
 if __name__ == "__main__":
