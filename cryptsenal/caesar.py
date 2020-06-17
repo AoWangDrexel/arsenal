@@ -54,5 +54,5 @@ class Caesar(Cipher):
 
 
 if __name__ == "__main__":
-    caesar = Caesar("defend the east wall of the castle", 12)
+    caesar = Caesar("The quick brown fox jumps over the lazy dog.", 7)
     print(caesar.encrypt())

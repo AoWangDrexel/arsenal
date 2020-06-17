@@ -30,7 +30,7 @@ class Vigenere(Cipher):
         :rtype: str
         """
         arr = self.removePunctuation()
-        arr = [self.intToChar((self.charToInt(char) + self.charToInt(self.key[idx % len(self.key)])))
+        arr = [self.intToChar(self.charToInt(char) + self.charToInt(self.key[idx % len(self.key)]))
                if char.isalpha() else char for (idx, char) in enumerate(arr)]
         return "".join(arr)
 
@@ -41,7 +41,7 @@ class Vigenere(Cipher):
         :rtype: str
         """
         arr = self.removePunctuation()
-        arr = [self.intToChar((self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)])))
+        arr = [self.intToChar(self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)]))
                if char.isalpha() else char for (idx, char) in enumerate(arr)]
         return "".join(arr)
 
