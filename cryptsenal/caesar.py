@@ -6,7 +6,6 @@ date: june 16, 2020
 
 
 from cryptsenal.cipher import Cipher
-import time
 
 
 class Caesar(Cipher):
@@ -31,10 +30,10 @@ class Caesar(Cipher):
         :returns: the encrypted plain text
         :rtype: str
         """
-        self.text = self.removePunctuation()
-        self.text = [self.intToChar((self.charToInt(char) + self.key))
-                     if char.isalpha() else char for char in self.text]
-        return "".join(self.text)
+        arr = self.removePunctuation()
+        arr = [self.intToChar((self.charToInt(char) + self.key))
+               if char.isalpha() else char for char in arr]
+        return "".join(arr)
 
     def decrypt(self):
         """Decrypts the cipher text into plain text
@@ -42,10 +41,10 @@ class Caesar(Cipher):
         :returns: the decrypted cipher text
         :rtype: str
         """
-        self.text = self.removePunctuation()
-        self.text = [self.intToChar((self.charToInt(char) - self.key))
-                     if char.isalpha() else char for char in self.text]
-        return "".join(self.text)
+        arr = self.removePunctuation()
+        arr = [self.intToChar((self.charToInt(char) - self.key))
+               if char.isalpha() else char for char in arr]
+        return "".join(arr)
 
     def getKey(self):
         return key

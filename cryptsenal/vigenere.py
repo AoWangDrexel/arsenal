@@ -29,10 +29,10 @@ class Vigenere(Cipher):
         :returns: the encrypted plain text
         :rtype: str
         """
-        self.text = self.removePunctuation()
-        self.text = [self.intToChar((self.charToInt(char) + self.charToInt(self.key[idx % len(self.key)])))
-                     if char.isalpha() else char for (idx, char) in enumerate(self.text)]
-        return "".join(self.text)
+        arr = self.removePunctuation()
+        arr = [self.intToChar((self.charToInt(char) + self.charToInt(self.key[idx % len(self.key)])))
+               if char.isalpha() else char for (idx, char) in enumerate(arr)]
+        return "".join(arr)
 
     def decrypt(self):
         """Decrypts the cipher text into plain text
@@ -40,10 +40,10 @@ class Vigenere(Cipher):
         :returns: the decrypted cipher text
         :rtype: str
         """
-        self.text = self.removePunctuation()
-        self.text = [self.intToChar((self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)])))
-                     if char.isalpha() else char for (idx, char) in enumerate(self.text)]
-        return "".join(self.text)
+        arr = self.removePunctuation()
+        arr = [self.intToChar((self.charToInt(char) - self.charToInt(self.key[idx % len(self.key)])))
+               if char.isalpha() else char for (idx, char) in enumerate(arr)]
+        return "".join(arr)
 
     def getKey(self):
         return self.key
