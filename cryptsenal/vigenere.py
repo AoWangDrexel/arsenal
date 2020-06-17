@@ -4,7 +4,7 @@ author: ao wang
 date: june 16, 2020
 """
 
-from cipher import Cipher
+from cryptsenal.cipher import Cipher
 
 
 class Vigenere(Cipher):
@@ -18,7 +18,7 @@ class Vigenere(Cipher):
 
     def __init__(self, text, key):
         super().__init__(text)
-        self.key = key
+        self.key = key.upper()
 
     def __str__(self):
         return "Text: {}, Key: {}".format(self.text, self.key)
