@@ -30,8 +30,7 @@ class Caesar(Cipher):
         :rtype: str
         """
         arr = self.removePunctuation()
-        arr = [self.intToChar((self.charToInt(char) + self.key))
-               if char.isalpha() else char for char in arr]
+        arr = [self.intToChar(self.charToInt(char) + self.key) for char in arr]
         return "".join(arr)
 
     def decrypt(self):
@@ -40,10 +39,8 @@ class Caesar(Cipher):
         :returns: the decrypted cipher text
         :rtype: str
         """
-        arr = self.removePunctuation()
-        arr = [self.intToChar((self.charToInt(char) - self.key))
-               if char.isalpha() else char for char in arr]
-        return "".join(arr)
+        self.setKey(26-self.key)
+        return self.encrypt()
 
     def getKey(self):
         return key
@@ -53,5 +50,5 @@ class Caesar(Cipher):
 
 
 if __name__ == "__main__":
-    caesar = Caesar("The quick brown fox jumps over the lazy dog.", 7)
-    print(caesar.encrypt())
+    caesar = Caesar("OCZLPDXFWMJRIAJSEPHKNJQZMOCZGVUTYJB", -5)
+    print(caesar.decrypt())
