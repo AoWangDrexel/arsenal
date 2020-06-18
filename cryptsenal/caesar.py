@@ -3,8 +3,6 @@ description: caesar cipher
 author: ao wang
 date: june 16, 2020
 """
-
-
 from cryptsenal.cipher import Cipher
 
 

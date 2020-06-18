@@ -35,7 +35,8 @@ class Affine(Cipher):
         a, b = self.key
         m = 26
         arr = self.removePunctuation()
-        arr = [self.intToChar((mod_inverse(a, m)*(self.charToInt(char)-b)) % m) for char in arr]
+        arr = [self.intToChar(
+            (mod_inverse(a, m)*(self.charToInt(char)-b)) % m) for char in arr]
         return "".join(arr)
 
     def getKey(self):
@@ -46,6 +47,6 @@ class Affine(Cipher):
 
 
 if __name__ == "__main__":
-    a = Affine("The quick brown fox jumps over the lazy dog.", (5, 8))
+    a = Affine("ZRCKEWSGNPAOVHATBEQFUAJCPZRCLIDYXAM", (5, 8))
     print(a)
-    print(a.encrypt())
+    print(a.decrypt())
