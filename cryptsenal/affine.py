@@ -28,16 +28,14 @@ class Affine(Cipher):
         a, b = self.key
         m = 26
         arr = self.removePunctuation()
-        arr = [self.intToChar((a*self.charToInt(char)+b) %
-                              m) if char.isalpha() else char for char in arr]
+        arr = [self.intToChar((a*self.charToInt(char)+b) % m) for char in arr]
         return "".join(arr)
 
     def decrypt(self):
         a, b = self.key
         m = 26
         arr = self.removePunctuation()
-        arr = [self.intToChar((mod_inverse(a, m)*(self.charToInt(char)-b)) %
-                              m) if char.isalpha() else char for char in arr]
+        arr = [self.intToChar((mod_inverse(a, m)*(self.charToInt(char)-b)) % m) for char in arr]
         return "".join(arr)
 
     def getKey(self):
