@@ -10,8 +10,12 @@ from cryptsenal.cipher import Cipher
 
 
 class Affine(Cipher):
-    """
+    """The Affine Cipher class
 
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: list
     """
 
     def __init__(self, text, key):
