@@ -6,22 +6,30 @@ date: june 18, 2020
 
 from cryptsenal.cipher import Cipher
 from sympy import Matrix, mod_inverse
+from math import gcd
 import string
 import random
-import timeit
 
 
 class Hill(Cipher):
     def __init__(self, text, key):
         key = Matrix(key)
         row, column = key.shape
+
         if row != column:
-            raise("Dimensions of the key are not a square matrix")
+            raise Exception("Dimensions of the key are not a square matrix")
+
+        if gcd(key.det(), 26) != 1:
+            raise Exception("Key is not invertible")
         super().__init__(text, key)
+
+    def __str__(self):
+        return "Message: {}, key: {}".format(self.text, self.key)
 
     def _matchDimension(self):
         arr = self.removePunctuation()
         evenDimensions = len(arr) % self.key.shape[0]
+
         if evenDimensions != 0:
             arr += "".join([random.choice(string.ascii_letters).upper()
                             for i in range(evenDimensions)])
@@ -31,6 +39,7 @@ class Hill(Cipher):
         cipherText = ""
         keyDim = self.key.shape[0]
         arr = [self.charToInt(char) for char in self._matchDimension()]
+
         for idx in range(0, len(arr), keyDim):
             cText = self.key * Matrix((arr[idx: idx+keyDim]))
             for i in list(cText):
@@ -42,6 +51,7 @@ class Hill(Cipher):
         keyDim = self.key.shape[0]
         kInverse = self.key.adjugate() * mod_inverse(self.key.det(), 26)
         arr = [self.charToInt(char) for char in self._matchDimension()]
+
         for idx in range(0, len(arr), keyDim):
             cText = kInverse * Matrix(arr[idx: idx+keyDim])
             for i in list(cText):
@@ -50,7 +60,5 @@ class Hill(Cipher):
 
 
 if __name__ == "__main__":
-    key = [[5, 17], [4, 15]]
-    msg = "OGTVZKCWQF"
-    h = Hill(msg, key)
-    print(h.decrypt())
+    plainText = 'LESTERSHILLWASANAMERICANMATHEMATICIANANDEDUCATOR'
+    Hill(plainText, ((1, 2), (3, 4)))
