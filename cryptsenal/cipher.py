@@ -46,8 +46,7 @@ class Cipher(metaclass=abc.ABCMeta):
         :returns: the letter at the number
         :rtype: str
         """
-        num %= 26
-        return string.ascii_uppercase[num]
+        return string.ascii_uppercase[num % 26]
 
     def charToInt(self, char):
         """Converts the character to an integer according to a dictionary
