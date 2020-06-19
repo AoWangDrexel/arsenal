@@ -32,6 +32,5 @@ class SimpleSubstitution(Cipher):
 
 
 if __name__ == "__main__":
-    msg = "GIUIFGCEIIPRCTPNNDUCEIQPRCNI"
-    key = "phqgiumeaylnofdxjkrcvstzwb"
-    print(SimpleSubstitution(msg, key).decrypt())
+    plainText = "ATTACKONTHEDAYOFBLACKSON"
+    print(SimpleSubstitution(plainText, "phqgiumeaylnofdxjkrcvstzwb").encrypt())
