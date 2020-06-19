@@ -25,18 +25,19 @@ def test_encrypt():
 
 def test_bad_keys():
     plainText = 'LESTERSHILLWASANAMERICANMATHEMATICIANANDEDUCATOR'
-    # keys = (((9, 18),
-    #          (3, 45)),
-    #         ((11, 118),
-    #          (55, 4)),
-    #         ((100, 99),
-    #          (98, 97)),
-    #         ((1, 2),
-    #          (3, 4)),
-    #         ((2, 2),
-    #          (3, 4)))
+    keys = (((9, 18),
+             (3, 45)),
+            ((11, 118),
+             (55, 4)),
+            ((100, 99),
+             (98, 97)),
+            ((1, 2),
+             (3, 4)),
+            ((2, 2),
+             (3, 4)))
     with pytest.raises(Exception):
-        Hill(plainText, ((1, 2), (3, 4)))
+        for key in keys:
+            Hill(plainText, key)
 
 
 def test_decrypt():
