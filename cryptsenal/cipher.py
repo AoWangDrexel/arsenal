@@ -36,7 +36,7 @@ class Cipher(metaclass=abc.ABCMeta):
         :returns: the plain text with only alphanumeric characters
         :rtype: str
         """
-        return self.text.translate(str.maketrans('', '', string.punctuation + " "))
+        return self.text.translate(str.maketrans('', '', string.punctuation + string.whitespace))
 
     def intToChar(self, num):
         """Converts integers into characters in the alphabet
@@ -47,8 +47,7 @@ class Cipher(metaclass=abc.ABCMeta):
         :rtype: str
         """
         num %= 26
-        arr = [chr(ord('A')+i) for i in range(26)]
-        return arr[num]
+        return string.ascii_uppercase[num]
 
     def charToInt(self, char):
         """Converts the character to an integer according to a dictionary
