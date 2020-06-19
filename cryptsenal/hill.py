@@ -1,5 +1,5 @@
 """
-description: abstract base class to extend to all other cipher classes
+description: hill cipher
 author: ao wang
 date: june 18, 2020
 """
@@ -12,6 +12,14 @@ import random
 
 
 class Hill(Cipher):
+    """The Hill Cipher class
+
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: list
+    """
+
     def __init__(self, text, key):
         key = Matrix(key)
         row, column = key.shape
@@ -31,7 +39,7 @@ class Hill(Cipher):
         evenDimensions = len(arr) % self.key.shape[0]
 
         if evenDimensions != 0:
-            arr += "".join([random.choice(string.ascii_letters).upper()
+            arr += "".join([random.choice(string.ascii_uppercase)
                             for i in range(evenDimensions)])
         return arr
 
@@ -60,5 +68,6 @@ class Hill(Cipher):
 
 
 if __name__ == "__main__":
+    # Results in error
     plainText = 'LESTERSHILLWASANAMERICANMATHEMATICIANANDEDUCATOR'
     Hill(plainText, ((1, 2), (3, 4)))
