@@ -1,3 +1,9 @@
+"""
+description: columnar transposition cipher
+author: ao wang
+date: june 19, 2020
+"""
+
 from cryptsenal.cipher import Cipher
 import numpy as np
 import random
@@ -6,6 +12,14 @@ import string
 
 
 class ColumnarTransposition(Cipher):
+    """The Columnar Transposition Cipher
+
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: str
+    """
+
     def __init__(self, text, key):
         super().__init__(text, key)
 
