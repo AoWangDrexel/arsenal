@@ -6,3 +6,6 @@ from .hill import Hill
 from .simple_substitution import SimpleSubstitution
 from .columnar_transposition import ColumnarTransposition
 from .rail_fence import RailFence
+from .autokey import AutoKey
+from .rsa import RSA
+from .enigma import Enigma
