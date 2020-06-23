@@ -12,36 +12,25 @@ class RailFence(Cipher):
 
     def encrypt(self):
         arr = self.removePunctuation()
-        numOfRow, numOfCol = self.key, len(self.text)
-        fence = np.full((numOfRow, numOfCol), "")
-        track, switchOrder = 0, True
-
-        for idx, char in enumerate(arr):
-            fence[track, idx] = char
-            if track % (numOfRow - 1) == 0:
-                switchOrder = not switchOrder
-
-            if switchOrder:
-                track -= 1
-            else:
-                track += 1
-
-        fence = "".join(list(fence.flatten()))
-        return fence
+        return "".join(self.createFence(arr))
 
     def decrypt(self):
         arr = self.removePunctuation()
-        numOfRow, numOfCol = self.key, len(self.text)
-        fence = np.full((numOfRow, numOfCol), "")
-        for idx, char in enumerate(arr):
-            pass
-        return super().decrypt()
+        ind = list(range(len(arr)))
+        pos = self.createFence(ind)
+        return "".join([arr[pos.index(i)] for i in ind])
+
+    def createFence(self, text):
+        numOfRow, numOfCol = self.key, len(text)
+        fence = np.full((numOfRow, numOfCol), -1)
+        rails = list(range(numOfRow-1)) + list(range(numOfRow-1, 0, -1))
+        for idx, char in enumerate(text):
+            fence[rails[idx % len(rails)], idx] = char
+        fence = fence.flatten()
+        return list(fence[fence != -1])
 
 
 if __name__ == "__main__":
-    msg = "defend the east wall of the castle"
-    key = 3
-    t0 = time.time()
-    print(RailFence(msg, key).encrypt())
-    t1 = time.time()
-    print(t1-t0)
+    plainText = "BEWARETHEBLACKSHEEP"
+    msg = "breceeaehbakhewtlsp".upper()
+    print(RailFence(msg, 3).decrypt())
