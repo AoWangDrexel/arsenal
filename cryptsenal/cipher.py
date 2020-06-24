@@ -6,6 +6,7 @@ date: june 16, 2020
 
 
 import abc
+import re
 import string
 
 
@@ -17,7 +18,7 @@ class Cipher(metaclass=abc.ABCMeta):
     """
 
     def __init__(self, text, key):
-        self.text = text
+        self.text = text.upper()
         self.key = key
 
     @abc.abstractmethod
@@ -36,7 +37,7 @@ class Cipher(metaclass=abc.ABCMeta):
         :returns: the plain text with only alphanumeric characters
         :rtype: str
         """
-        return self.text.translate(str.maketrans('', '', string.punctuation + string.whitespace))
+        return re.sub("[^A-Z]", "", repr(self.text))
 
     def intToChar(self, num):
         """Converts integers into characters in the alphabet
