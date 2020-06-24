@@ -4,6 +4,7 @@ author: ao wang
 date: june 16, 2020
 """
 from cryptsenal.cipher import Cipher
+import random
 
 
 class Caesar(Cipher):
@@ -45,6 +46,10 @@ class Caesar(Cipher):
 
     def setKey(self, key):
         self.key = key
+
+
+def random_key():
+    return random.randint(1, 25)
 
 
 if __name__ == "__main__":
