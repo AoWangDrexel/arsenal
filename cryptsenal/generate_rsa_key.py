@@ -40,4 +40,4 @@ class RSAKey():
 
 if __name__ == "__main__":
     rsa = RSAKey(61, 53)
-    print(rsa.N, rsa.totient, rsa.getE(), rsa.getD(17))
+    print(rsa.N, rsa.getE(), rsa.getD(17))

@@ -8,4 +8,5 @@ from .columnar_transposition import ColumnarTransposition
 from .rail_fence import RailFence
 from .autokey import AutoKey
 from .rsa import RSA
+from .generate_rsa_key import RSAKey
 from .enigma import Enigma
