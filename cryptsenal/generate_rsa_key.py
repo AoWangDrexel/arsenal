@@ -1,9 +1,24 @@
+"""
+description: generates RSA keys
+author: ao wang
+date: june 24, 2020
+"""
+
 from math import gcd
 from sympy import isprime, mod_inverse
 from numpy import lcm
 
 
 class RSAKey():
+    """The RSAKey class
+
+    1. pick 2 prime numbers, p and q
+    2. multiply them to get N = p * q, becomes the modulus
+    3. phi function phi(N) =  (p-1)(q-1) or number of coprimes with N
+    4. find e, got to be between 1 < e < phi(N),
+        coprime with N, phi(N)
+    5. find d, (d * e) % phi(N) = 1
+    """
     def __init__(self, p, q):
         self.p = p
         self.q = q
