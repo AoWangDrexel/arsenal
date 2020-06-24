@@ -48,5 +48,10 @@ class Caesar(Cipher):
 
 
 if __name__ == "__main__":
-    caesar = Caesar("OCZLPDXFWMJRIAJSEPHKNJQZMOCZGVUTYJB", -5)
-    print(caesar.decrypt())
+    msg = """JQRRG, JQRRG, TGKVGT, JQRRG, JQRRG, TGKVGT,YGPP, GT HCGNNV FCPP 
+    UEJTGKV GTHCGNNV GT KP FGP ITCDGPHTGUUGP KJP FKG TCDGPHCGNNV GT KP FGP 
+    UWORHFCPP OCEJV FGT TGKVGT RNWORUJWORVA FWORVAJWORVA FWORVA UCV QP C 
+    YCNNJWORVA FWORVA JCF C ITGCV HCNNCNN VJG MKPIU JQTUGU CPF CNN VJG MKPIU
+    OGPEQWNFPV RWV JWORVA VQIGVJGT CICKP"""
+    for i in range(1, 26):
+        print("key: {}, msg: {}".format(i, Caesar(msg, i).encrypt()))
