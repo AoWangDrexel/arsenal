@@ -6,6 +6,7 @@ date: june 18, 2020
 
 from cryptsenal.cipher import Cipher
 import string
+import random
 
 
 class SimpleSubstitution(Cipher):
@@ -29,6 +30,10 @@ class SimpleSubstitution(Cipher):
         arr = self.removePunctuation()
         arr = [string.ascii_uppercase[self.key.find(char)] for char in arr]
         return "".join(arr)
+
+
+def random_key():
+    return random.shuffle(string.ascii_uppercase)
 
 
 if __name__ == "__main__":
