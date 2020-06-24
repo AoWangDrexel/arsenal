@@ -1,9 +1,23 @@
+"""
+description: railfence cipher
+author: ao wang
+date: june 23, 2020
+"""
+
 from cryptsenal.cipher import Cipher
 import numpy as np
 import time
 
 
 class RailFence(Cipher):
+    """The RailFence Cipher class
+
+    :param text: the plain/cipher text
+    :type text: str
+    :param key: the cipher key
+    :type key: int
+    """
+
     def __init__(self, text, key):
         if key >= len(text):
             raise Exception(
@@ -26,11 +40,14 @@ class RailFence(Cipher):
             fence = np.full((numOfRow, numOfCol), -1)
         else:
             fence = np.full((numOfRow, numOfCol), "")
+
         rails = list(range(numOfRow-1)) + list(range(numOfRow-1, 0, -1))
+
         for idx, char in enumerate(text):
             fence[rails[idx % len(rails)], idx] = char
+
         fence = fence.flatten()
-        return list(fence[fence != -1])  if (type(text[0]) == int) else list(fence[fence != ""])
+        return list(fence[fence != -1]) if (type(text[0]) == int) else list(fence[fence != ""])
 
 
 if __name__ == "__main__":
