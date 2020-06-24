@@ -22,12 +22,15 @@ class RailFence(Cipher):
 
     def createFence(self, text):
         numOfRow, numOfCol = self.key, len(text)
-        fence = np.full((numOfRow, numOfCol), -1)
+        if type(text[0]) == int:
+            fence = np.full((numOfRow, numOfCol), -1)
+        else:
+            fence = np.full((numOfRow, numOfCol), "")
         rails = list(range(numOfRow-1)) + list(range(numOfRow-1, 0, -1))
         for idx, char in enumerate(text):
             fence[rails[idx % len(rails)], idx] = char
         fence = fence.flatten()
-        return list(fence[fence != -1])
+        return list(fence[fence != -1])  if (type(text[0]) == int) else list(fence[fence != ""])
 
 
 if __name__ == "__main__":
