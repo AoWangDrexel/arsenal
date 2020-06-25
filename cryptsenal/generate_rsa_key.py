@@ -35,31 +35,35 @@ class RSAKey():
         # Update using Carmichael's instead of Euler's  (p-1)(q-1)
         self.totient = lcm(self.p-1, self.q-1)
 
-    def __str__(self):
-        string = "-----BEGIN PUBLIC KEY-----\n"
-        e = self.getE()
-        string += self._toBase64(e)
-        string += "\n-----END PUBLIC KEY-----\n\n"
-
-        string += "-----BEGIN RSA PRIVATE KEY-----\n"
-        string += self._toBase64(self.getD(e))
-        string += "\n-----END RSA PRIVATE KEY-----"
-        return string
-
-    def getE(self):
         while True:
             e = random.randrange(2**(self.keySize-1), 2**self.keySize)
             if gcd(e, self.totient) == 1:
-                return e
+                break
 
-    def getD(self, E):
-        return mod_inverse(E, self.totient)
+        self.e = e
+        self.d = mod_inverse(e, self.totient)
+
+    def __str__(self):
+        string = "-----BEGIN PUBLIC KEY-----\n"
+        string += self._toBase64(self.e)
+        string += "\n-----END PUBLIC KEY-----\n\n"
+
+        string += "-----BEGIN RSA PRIVATE KEY-----\n"
+        string += self._toBase64(self.d)
+        string += "\n-----END RSA PRIVATE KEY-----"
+        return string
 
     def _toBase64(self, key):
         key = str(key)
         keyBytes = key.encode("ascii")
         return base64.b64encode(keyBytes).decode('utf-8')
 
+    def saveAsText(self, key):
+        pass
+
 
 if __name__ == "__main__":
-    print(RSAKey())
+    rsa = RSAKey()
+    print(rsa.e)
+    print(rsa.d)
+    print(rsa.N)
