@@ -29,19 +29,20 @@ class RSAKey():
     def __init__(self, keySize=1024):
         self.p = generateLargePrime(keySize)
         self.q = generateLargePrime(keySize)
-        self.N = p * q
+        self.N = self.p * self.q
+        self.keySize = keySize
 
         # Update using Carmichael's instead of Euler's  (p-1)(q-1)
-        self.totient = lcm(p-1, q-1)
+        self.totient = lcm(self.p-1, self.q-1)
 
     def __str__(self):
         string = "-----BEGIN PUBLIC KEY-----\n"
         e = self.getE()
-        string += str(self._toBase64(e).decode('utf-8'))
+        string += self._toBase64(e)
         string += "\n-----END PUBLIC KEY-----\n\n"
 
         string += "-----BEGIN RSA PRIVATE KEY-----\n"
-        string += str(self._toBase64(self.getD(e)).decode('utf-8'))
+        string += self._toBase64(self.getD(e))
         string += "\n-----END RSA PRIVATE KEY-----"
         return string
 
@@ -57,7 +58,7 @@ class RSAKey():
     def _toBase64(self, key):
         key = str(key)
         keyBytes = key.encode("ascii")
-        return base64.b64encode(keyBytes)
+        return base64.b64encode(keyBytes).decode('utf-8')
 
 
 if __name__ == "__main__":
