@@ -58,12 +58,24 @@ class RSAKey():
         keyBytes = key.encode("ascii")
         return base64.b64encode(keyBytes).decode('utf-8')
 
-    def saveAsText(self, key):
-        pass
+    def saveKeys(self):
+        with open("rsa_keys/rsa_pub_key.txt", "w") as public, \
+                open("rsa_keys/rsa_priv_key.txt", "w") as private:
+            pub = "-----BEGIN PUBLIC KEY-----\n"
+            e = self._toBase64(self.e)
+            for i in range(0, len(e), 64):
+                pub += e[i:i+64] + "\n"
+            pub += "-----END PUBLIC KEY-----"
+            public.write(pub)
+
+            priv = "-----BEGIN RSA PRIVATE KEY-----\n"
+            d = self._toBase64(self.d)
+            for i in range(0, len(d), 64):
+                priv += d[i:i+64] + "\n"
+            priv += "-----END RSA PRIVATE KEY-----"
+            private.write(priv)
 
 
 if __name__ == "__main__":
     rsa = RSAKey()
-    print(rsa.e)
-    print(rsa.d)
-    print(rsa.N)
+    print(rsa)
