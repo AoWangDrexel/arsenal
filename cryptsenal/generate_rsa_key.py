@@ -5,8 +5,14 @@ date: june 24, 2020
 """
 
 from math import gcd
-from sympy import isprime, mod_inverse
+from sympy import isprime, randprime, mod_inverse
 from numpy import lcm
+import random
+import base64
+
+
+def generateLargePrime(keySize=1024):
+    return randprime(2**(keySize-1), 2**keySize)
 
 
 class RSAKey():
@@ -19,40 +25,40 @@ class RSAKey():
         coprime with N, phi(N)
     5. find d, (d * e) % phi(N) = 1
     """
-    def __init__(self, p, q):
-        self.p = p
-        self.q = q
-        if isprime(p) and isprime(q):
-            self.N = p * q
-            self.totient = lcm(p-1, q-1)
-        else:
-            raise Exception("p or q are not prime numbers")
+
+    def __init__(self, keySize=1024):
+        self.p = generateLargePrime(keySize)
+        self.q = generateLargePrime(keySize)
+        self.N = p * q
+
+        # Update using Carmichael's instead of Euler's  (p-1)(q-1)
+        self.totient = lcm(p-1, q-1)
+
+    def __str__(self):
+        string = "-----BEGIN PUBLIC KEY-----\n"
+        e = self.getE()
+        string += str(self._toBase64(e).decode('utf-8'))
+        string += "\n-----END PUBLIC KEY-----\n\n"
+
+        string += "-----BEGIN RSA PRIVATE KEY-----\n"
+        string += str(self._toBase64(self.getD(e)).decode('utf-8'))
+        string += "\n-----END RSA PRIVATE KEY-----"
+        return string
 
     def getE(self):
-        return [i for i in range(2, self.totient) if gcd(i, self.totient) == 1]
+        while True:
+            e = random.randrange(2**(self.keySize-1), 2**self.keySize)
+            if gcd(e, self.totient) == 1:
+                return e
 
     def getD(self, E):
         return mod_inverse(E, self.totient)
 
-    def getP(self):
-        return self.p
-
-    def setP(self, p):
-        if isprime(p):
-            self.p = p
-        else:
-            raise Exception("p is not a prime number")
-
-    def getQ(self):
-        return self.q
-
-    def setQ(self, q):
-        if isprime(q):
-            self.q = q
-        else:
-            raise Exception("q is not a prime number")
+    def _toBase64(self, key):
+        key = str(key)
+        keyBytes = key.encode("ascii")
+        return base64.b64encode(keyBytes)
 
 
 if __name__ == "__main__":
-    rsa = RSAKey(61, 53)
-    print(rsa.N, rsa.getE(), rsa.getD(17))
+    print(RSAKey())
