@@ -19,6 +19,9 @@ class AutoKey(Cipher):
     def __init__(self, text, key):
         super().__init__(text, key.upper())
 
+    def __str__(self):
+        return "Message: {}\nKey: {}".format(self.text, self.key)
+
     def encrypt(self):
         cipherText = ""
         arr = self.removePunctuation()
@@ -45,4 +48,5 @@ class AutoKey(Cipher):
 if __name__ == "__main__":
     msg = "ISWXVIBJEXIGGZEQPBIMOIGAKMHE"
     key = "FORTIFICATION"
-    print(AutoKey(msg, key).decrypt())
+    a = AutoKey(msg, key)
+    print(a.decrypt())

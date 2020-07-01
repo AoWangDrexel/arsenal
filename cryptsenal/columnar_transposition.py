@@ -23,6 +23,9 @@ class ColumnarTransposition(Cipher):
     def __init__(self, text, key):
         super().__init__(text, key)
 
+    def __str__(self):
+        return "Message: {}\nKey: {}".format(self.text, self.key)
+
     def completeTheSquare(self):
         arr = self.removePunctuation().upper()
         area = math.ceil(len(arr)/len(self.key)) * len(self.key)
@@ -61,4 +64,5 @@ class ColumnarTransposition(Cipher):
 if __name__ == "__main__":
     msg = "NALCIEHWTTDTTFSEELEEDSOAWFEAHL"
     key = "GERMAN"
-    print(ColumnarTransposition(msg, key).decrypt())
+    c = ColumnarTransposition(msg, key)
+    print(c.decrypt())

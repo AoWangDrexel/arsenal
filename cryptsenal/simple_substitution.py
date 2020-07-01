@@ -21,6 +21,9 @@ class SimpleSubstitution(Cipher):
     def __init__(self, text, key):
         super().__init__(text, key.upper())
 
+    def __str__(self):
+        return "Message: {}\nKey: {}".format(self.text, self.key)
+
     def encrypt(self):
         arr = self.removePunctuation()
         arr = [self.key[self.charToInt(char)] for char in arr]
@@ -38,4 +41,5 @@ def random_key():
 
 if __name__ == "__main__":
     plainText = "ATTACKONTHEDAYOFBLACKSON"
-    print(SimpleSubstitution(plainText, "phqgiumeaylnofdxjkrcvstzwb").encrypt())
+    s = SimpleSubstitution(plainText, "phqgiumeaylnofdxjkrcvstzwb")
+    print(s.encrypt())

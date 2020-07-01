@@ -24,6 +24,9 @@ class RailFence(Cipher):
                 "The key is either the same size or larger than the text")
         super().__init__(text, key)
 
+    def __str__(self):
+        return "Message: {}\nKey: {}".format(self.text, self.key)
+
     def encrypt(self):
         arr = self.removePunctuation()
         return "".join(self.createFence(arr))
@@ -53,4 +56,5 @@ class RailFence(Cipher):
 if __name__ == "__main__":
     plainText = "BEWARETHEBLACKSHEEP"
     msg = "breceeaehbakhewtlsp".upper()
-    print(RailFence(msg, 3).decrypt())
+    r = RailFence(msg, 3)
+    print(r.decrypt())
