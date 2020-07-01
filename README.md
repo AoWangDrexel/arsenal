@@ -40,7 +40,6 @@ pip install -r requirements.txt
 * [Autokey](https://en.wikipedia.org/wiki/Autokey_cipher)
 * [Caesar](https://en.wikipedia.org/wiki/Caesar_cipher)
 * [Columnar Transposition](https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition)
-* [Enigma]() 
 * [Hill](https://en.wikipedia.org/wiki/Hill_cipher#:~:text=In%20classical%20cryptography%2C%20the%20Hill,than%20three%20symbols%20at%20once.)
 
 * [Rail Fence](https://en.wikipedia.org/wiki/Rail_fence_cipher)
@@ -58,5 +57,6 @@ pip install -r requirements.txt
 * [Cracking the Code with Python](http://inventwithpython.com/cracking/)
 
 ## Future Plans <div id="future"></div>
-
-I'm hoping to learn C++ in depth and create a QUICK decrypter, being able to break most of the ciphers you see above with cryptoanalysis. 
+* Implement the Enigma Machine
+* Create a Flask application
+* Learn C++ in depth to create a QUICK decrypte (able to break most of the ciphers you see above with cryptoanalysis). 
