@@ -36,16 +36,17 @@ pip install -r requirements.txt
 
 ## List of Ciphers <div id="cipher"></div>
 
-* [Affine]()
-* [Autokey]()
-* [Caesar]()
-* [Columnar Transposition]()
+* [Affine](https://en.wikipedia.org/wiki/Affine_cipher)
+* [Autokey](https://en.wikipedia.org/wiki/Autokey_cipher)
+* [Caesar](https://en.wikipedia.org/wiki/Caesar_cipher)
+* [Columnar Transposition](https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition)
 * [Enigma]() 
-* [Hill]()
-* [Rail Fence]()
-* [RSA]() 
-* [Simple Subsitution]()
-* [Vigenere]()
+* [Hill](https://en.wikipedia.org/wiki/Hill_cipher#:~:text=In%20classical%20cryptography%2C%20the%20Hill,than%20three%20symbols%20at%20once.)
+
+* [Rail Fence](https://en.wikipedia.org/wiki/Rail_fence_cipher)
+* [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) 
+* [Simple Subsitution](https://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution)
+* [Vigenere](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
 
 ## License <div id="licence"></div>
 
